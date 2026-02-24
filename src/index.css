@@ -1,0 +1,470 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap");
+
+/* ── RESET & ROOT ─────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --black: #0a0a0a;
+  --white: #f0ede8;
+  --accent: #c8b8a2;
+  --mid: #1a1a1a;
+  --border: rgba(255, 255, 255, 0.07);
+}
+
+html,
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: "Space Mono", monospace;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── NAV ──────────────────────────────────────────── */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 28px;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  color: var(--white);
+  font-family: "Space Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.2s;
+  padding: 0;
+}
+.nav-btn:hover {
+  opacity: 1;
+}
+
+/* ── CORNERS ──────────────────────────────────────── */
+.corner {
+  position: fixed;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  z-index: 90;
+  color: var(--white);
+  opacity: 0.45;
+  transition: opacity 0.2s;
+  text-decoration: none;
+  font-family: "Space Mono", monospace;
+}
+.corner:hover {
+  opacity: 1;
+}
+.corner-bl {
+  bottom: 28px;
+  left: 28px;
+}
+.corner-br {
+  bottom: 28px;
+  right: 28px;
+}
+
+/* ── HERO ─────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+}
+
+.hero-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(72px, 17vw, 220px);
+  letter-spacing: 0.02em;
+  line-height: 0.88;
+  color: var(--white);
+  cursor: pointer;
+  transition: color 0.3s;
+  user-select: none;
+}
+.hero-title:hover {
+  color: var(--accent);
+}
+
+.hero-slogan {
+  font-size: clamp(10px, 1.3vw, 14px);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 20px;
+  font-style: italic;
+}
+
+/* ── TICKER ───────────────────────────────────────── */
+.ticker {
+  overflow: hidden;
+  white-space: nowrap;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 13px 0;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.ticker-inner {
+  display: inline-block;
+  animation: ticker 32s linear infinite;
+}
+
+@keyframes ticker {
+  from {
+    transform: translateX(100vw);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* ── MENU OVERLAY ─────────────────────────────────── */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--black);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  padding: 90px 40px 60px;
+  transform: translateY(-100%);
+  transition: transform 0.55s cubic-bezier(0.77, 0, 0.18, 1);
+  overflow-y: auto;
+}
+.menu-overlay.open {
+  transform: translateY(0);
+}
+
+.menu-close {
+  position: absolute;
+  top: 22px;
+  right: 28px;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-family: "Space Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.2s;
+}
+.menu-close:hover {
+  opacity: 1;
+}
+
+.menu-artist-list {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.menu-artist-list li {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(30px, 5vw, 60px);
+  letter-spacing: 0.05em;
+  border-top: 1px solid var(--border);
+  cursor: pointer;
+  padding: 8px 0;
+  color: var(--white);
+  transition: color 0.2s, padding-left 0.25s;
+}
+.menu-artist-list li:hover {
+  color: var(--accent);
+  padding-left: 16px;
+}
+
+/* ── SECTIONS ─────────────────────────────────────── */
+.section {
+  padding: 80px 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.section-label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 36px;
+  opacity: 0.8;
+}
+
+/* ── ARTISTS GRID ─────────────────────────────────── */
+.artists-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2px;
+}
+
+.artist-card {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--mid);
+}
+
+.artist-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%);
+  transition: filter 0.4s, transform 0.5s;
+  display: block;
+}
+.artist-card:hover img {
+  filter: grayscale(0%);
+  transform: scale(1.04);
+}
+
+.artist-card-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 60px 18px 18px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 26px;
+  letter-spacing: 0.08em;
+  color: var(--white);
+  transform: translateY(4px);
+  transition: transform 0.3s;
+}
+.artist-card:hover .artist-card-name {
+  transform: translateY(0);
+}
+
+/* ── ARTIST PAGE ──────────────────────────────────── */
+.artist-page {
+  min-height: 100vh;
+  padding: 100px 32px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--white);
+  font-family: "Space Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0.45;
+  padding: 0;
+  margin-bottom: 48px;
+  display: block;
+  transition: opacity 0.2s;
+}
+.back-btn:hover {
+  opacity: 1;
+}
+
+.artist-page-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: end;
+  margin-bottom: 80px;
+}
+
+.artist-page-img {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--mid);
+}
+.artist-page-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%);
+  display: block;
+}
+
+.artist-page-info h1 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(48px, 8vw, 110px);
+  letter-spacing: 0.03em;
+  line-height: 0.9;
+  margin-bottom: 24px;
+  color: var(--white);
+}
+
+.artist-page-info p {
+  font-size: 12px;
+  line-height: 1.95;
+  opacity: 0.65;
+  letter-spacing: 0.05em;
+}
+
+.artist-page-tagline {
+  margin-top: 28px !important;
+  opacity: 0.3 !important;
+  font-size: 10px !important;
+  letter-spacing: 0.15em !important;
+  text-transform: uppercase;
+}
+
+/* ── GALLERY ──────────────────────────────────────── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 3px;
+}
+
+.gallery-item {
+  aspect-ratio: 1;
+  background: var(--mid);
+  overflow: hidden;
+}
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(60%);
+  transition: filter 0.35s, transform 0.4s;
+  display: block;
+}
+.gallery-item:hover img {
+  filter: grayscale(0%);
+  transform: scale(1.06);
+}
+
+/* ── CONTACT ──────────────────────────────────────── */
+.contact-section {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 100px 32px;
+}
+
+.contact-section h2 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(40px, 7vw, 82px);
+  letter-spacing: 0.05em;
+  margin-bottom: 24px;
+}
+
+.contact-section p {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  opacity: 0.55;
+  line-height: 1.9;
+  margin-bottom: 40px;
+}
+
+.email-form {
+  display: flex;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.email-form input {
+  flex: 1;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-right: none;
+  color: var(--white);
+  font-family: "Space Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  padding: 14px 18px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.email-form input:focus {
+  border-color: var(--accent);
+}
+.email-form input::placeholder {
+  opacity: 0.35;
+}
+
+.email-form button {
+  background: var(--white);
+  color: var(--black);
+  border: none;
+  font-family: "Space Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 14px 22px;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.email-form button:hover {
+  background: var(--accent);
+}
+
+.contact-thanks {
+  color: var(--accent);
+  letter-spacing: 0.22em;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+/* ── FOOTER ───────────────────────────────────────── */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 36px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.35;
+}
+
+/* ── RESPONSIVE ───────────────────────────────────── */
+@media (max-width: 768px) {
+  .artist-page-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .corner-bl,
+  .corner-br {
+    bottom: 16px;
+    font-size: 9px;
+  }
+
+  .footer {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .section {
+    padding: 60px 20px;
+  }
+}
