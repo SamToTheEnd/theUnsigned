@@ -1,17 +1,20 @@
+const base = import.meta.env.BASE_URL;
+
 interface NewsPageProps {
     onBack: () => void;
+    onLightbox: (src: string) => void;
 }
 
 const POSTERS = [
-    "/posterOne.jpeg",
-    "/posterTwo.jpeg",
-    "/posterThree.jpeg",
-    "/posterFour.jpeg",
-    "/posterFive.jpeg",
-    "/posterSix.jpeg",
+    `${base}posterOne.jpeg`,
+    `${base}posterTwo.jpeg`,
+    `${base}posterThree.jpeg`,
+    `${base}posterFour.jpeg`,
+    `${base}posterFive.jpeg`,
+    `${base}posterSix.jpeg`,
 ];
 
-export default function NewsPage({ onBack, onLightbox }: NewsPageProps & { onLightbox: (src: string) => void }) {
+export default function NewsPage({ onBack, onLightbox }: NewsPageProps) {
     return (
         <div className="static-page">
             <button className="back-btn" onClick={onBack}>← Back</button>
