@@ -1,97 +1,103 @@
 import { useState } from "react";
 import { ARTISTS, Artist } from "./data/artists";
 
-import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import Ticker from "./components/Ticker";
 import MenuOverlay from "./components/MenuOverlay";
 import ArtistCard from "./components/ArtistCard";
-import ArtistPage from "./components/ArtistPage";
-import Gallery from "./components/Gallery";
 import ContactSection from "./components/ContactSection";
+import AboutPage from "./components/AboutPage";
+import ProductsPage from "./components/ProductsPage";
+import NewsPage from "./components/NewsPage";
+import Lightbox from "./components/Lightbox";
 
-type Page = "home" | "artist";
+type Page = "home" | "about" | "products" | "news";
 
 export default function App() {
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [page, setPage] = useState<Page>("home");
-    const [currentArtist, setCurrentArtist] = useState<Artist | null>(null);
+    const [lightboxImg, setLightboxImg] = useState<string | null>(null);
+    const [hoveredArtist, setHoveredArtist] = useState<Artist | null>(null);
 
     const goHome = () => {
-        setCurrentArtist(null);
         setPage("home");
+        window.scrollTo({ top: 0 });
     };
 
-    const openArtist = (artist: Artist) => {
-        setCurrentArtist(artist);
-        setPage("artist");
+    const navigate = (p: Page) => {
+        setPage(p);
+        window.scrollTo({ top: 0 });
     };
 
-    const scrollToContact = (e: React.MouseEvent) => {
-        e.preventDefault();
-        document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+    const scrollToContact = () => {
+        if (page !== "home") {
+            setPage("home");
+            setTimeout(() => {
+                document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+            }, 50);
+        } else {
+            document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+        }
+    };
+
+    const renderPage = () => {
+        switch (page) {
+            case "about":
+                return <AboutPage onBack={goHome} />;
+            case "products":
+                return <ProductsPage onBack={goHome} />;
+            case "news":
+                return <NewsPage onBack={goHome} onLightbox={setLightboxImg} />;
+            default:
+                return (
+                    <>
+                        {hoveredArtist && (
+                            <div
+                                className="roster-bg-image"
+                                style={{ backgroundImage: `url(${hoveredArtist.img})` }}
+                            />
+                        )}
+
+                        <Hero onTitleClick={() => setMenuOpen(true)} />
+                        <Ticker />
+
+                        <section className="section" id="artists">
+                            <span className="section-label">Roster</span>
+                            <ul className="roster-list">
+                                {ARTISTS.map((a) => (
+                                    <ArtistCard
+                                        key={a.id}
+                                        artist={a}
+                                        onHover={setHoveredArtist}
+                                    />
+                                ))}
+                            </ul>
+                        </section>
+
+                        <ContactSection />
+                    </>
+                );
+        }
     };
 
     return (
         <>
-            {/* Top nav */}
-            <Nav onMenuOpen={() => setMenuOpen(true)} onHome={goHome} />
-
-            {/* Full-screen artist menu */}
             <MenuOverlay
                 open={menuOpen}
                 onClose={() => setMenuOpen(false)}
                 artists={ARTISTS}
-                onSelectArtist={openArtist}
+                onSelectArtist={() => setMenuOpen(false)}
             />
 
-            {/* Fixed corner links */}
-            <a
-                className="corner corner-bl"
-                href="#artists"
-                onClick={(e) => {
-                    e.preventDefault();
-                    goHome();
-                    setTimeout(
-                        () => document.getElementById("artists")?.scrollIntoView({ behavior: "smooth" }),
-                        50
-                    );
-                }}
-            >
-                Artists
-            </a>
-            <a className="corner corner-br" href="#contact" onClick={scrollToContact}>
-                Contact / Register
-            </a>
+            <button className="corner corner-tl" onClick={() => navigate("about")}>About</button>
+            <button className="corner corner-tr" onClick={() => navigate("news")}>News</button>
+            <button className="corner corner-bl" onClick={() => navigate("products")}>Products</button>
+            <button className="corner corner-br" onClick={scrollToContact}>Register your interest</button>
 
-            {/* Pages */}
-            {page === "artist" && currentArtist ? (
-                <ArtistPage artist={currentArtist} onBack={goHome} />
-            ) : (
-                <>
-                    <Hero onTitleClick={() => setMenuOpen(true)} />
+            {renderPage()}
 
-                    <Ticker />
-
-                    <section className="section" id="artists">
-                        <span className="section-label">Roster</span>
-                        <div className="artists-grid">
-                            {ARTISTS.map((a) => (
-                                <ArtistCard key={a.id} artist={a} onClick={openArtist} />
-                            ))}
-                        </div>
-                    </section>
-
-                    <Gallery />
-
-                    <ContactSection />
-
-                    <footer className="footer">
-                        <span>© 2025 The Unsigned</span>
-                        <span>Unapologetically Women</span>
-                        <span>Privacy Policy</span>
-                    </footer>
-                </>
+            {lightboxImg && (
+                <Lightbox src={lightboxImg} onClose={() => setLightboxImg(null)} />
             )}
         </>
     );

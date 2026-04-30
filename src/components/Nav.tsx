@@ -7,9 +7,9 @@ export default function Nav({ onMenuOpen, onHome }: NavProps) {
     return (
         <nav className="nav">
             <button className="nav-btn" onClick={onMenuOpen}>
-                Artists
+                Menu
             </button>
-            <button className="nav-btn" onClick={onHome}>
+            <button className="nav-btn nav-title" onClick={onHome}>
                 The Unsigned
             </button>
         </nav>

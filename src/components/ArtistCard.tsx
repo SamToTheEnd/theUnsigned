@@ -2,14 +2,17 @@ import { Artist } from "../data/artists";
 
 interface ArtistCardProps {
     artist: Artist;
-    onClick: (artist: Artist) => void;
+    onHover: (artist: Artist | null) => void;
 }
 
-export default function ArtistCard({ artist, onClick }: ArtistCardProps) {
+export default function ArtistCard({ artist, onHover }: ArtistCardProps) {
     return (
-        <div className="artist-card" onClick={() => onClick(artist)}>
-            <img src={artist.img} alt={artist.name} loading="lazy" />
-            <div className="artist-card-name">{artist.name}</div>
+        <div
+            className="artist-card"
+            onMouseEnter={() => onHover(artist)}
+            onMouseLeave={() => onHover(null)}
+        >
+            <span className="artist-card-name">{artist.name}</span>
         </div>
     );
 }
