@@ -8,7 +8,7 @@ export default function Hero({ onTitleClick }: HeroProps) {
             <h1 className="hero-title" onClick={onTitleClick}>
                 THE UNSIGNED
             </h1>
-            <p className="hero-slogan">unapologetically women</p>
+            <p className="hero-slogan">Only Her Sound</p>
         </section>
     );
 }
